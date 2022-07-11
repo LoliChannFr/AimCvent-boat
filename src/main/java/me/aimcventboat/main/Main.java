@@ -12,6 +12,7 @@ public class Main extends JavaPlugin {
         System.out.println("Plugin de course de bateaux lancé.");
 
         getCommand("test").setExecutor(new Test());
+        getCommand("test").setExecutor(new Test());
 
     }
 
