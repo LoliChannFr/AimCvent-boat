@@ -1,0 +1,10 @@
+name: AimCvent-Boat
+version: '${project.version}'
+main: me.aimcventboat.main.Main
+api-version: 1.18
+authors: [ LoliChann ]
+description: Boat run AimCvent
+commands:
+  test:
+    description: test
+    permission: test.use
