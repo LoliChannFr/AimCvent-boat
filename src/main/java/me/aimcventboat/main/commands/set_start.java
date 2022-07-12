@@ -4,11 +4,16 @@ package me.aimcventboat.main.commands;
 import com.github.cliftonlabs.json_simple.JsonException;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,6 +35,10 @@ public class set_start implements CommandExecutor, TabCompleter {
 
             Player player = (Player) sender;
 
+            Inventory gui = Bukkit.createInventory(player, 9, "§8Choisissez la course");
+
+
+
 
             try {
                 // create a reader
@@ -42,43 +51,25 @@ public class set_start implements CommandExecutor, TabCompleter {
 
                 List<String> runs = (List<String>) parser.get("runslist");
 
-                try {
-                    if (runs.contains(((String) args[0]))) {
-                        try {
+                List<ItemStack> menu = new ArrayList<>();
 
-                            JsonObject selected_run = (JsonObject) parser.get(args[0]);
 
-                            List<Double> coord = new ArrayList<>();
-                            coord.add(player.getLocation().getX());
-                            coord.add(player.getLocation().getY());
-                            coord.add(player.getLocation().getZ());
 
-                            Float direction = player.getLocation().getYaw();
+                for(int i = 1; i < runs.size() + 1; i++) {
+                    ItemStack wrench = new ItemStack(Material.BLUE_WOOL);
+                    ItemMeta metawrench = wrench.getItemMeta();
+                    metawrench.setCustomModelData(i);
+                    metawrench.setDisplayName("§fCourse #" + i);
+                    wrench.setItemMeta(metawrench);
 
-                            selected_run.put("start_place",coord);
-                            selected_run.put("start_direction",direction);
-
-                            parser.put(args[0], selected_run);
-
-                            BufferedWriter writer = Files.newBufferedWriter(Paths.get("./plugins/AimCvent-boat/runs.json"));
-
-                            Jsoner.serialize(parser, writer);
-
-                            writer.close();
-                            reader.close();
-
-                            player.sendMessage("Position de spawn de la course ", args[0], "enregistrée !");
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        player.sendMessage("La course que vous cherchez n'existe pas !");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    player.sendMessage("La course que vous cherchez n'existe pas !");
+                    menu.add(wrench);
+                    
                 }
+
+                ItemStack[] menu_items = menu.toArray(new ItemStack[0]);
+
+                gui.setContents(menu_items);
+                player.openInventory(gui);
             } catch (IOException | JsonException e) {
                 e.printStackTrace();
             }
