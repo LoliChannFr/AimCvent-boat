@@ -1,8 +1,6 @@
 package me.aimcventboat.main;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.scheduler.BukkitRunnable;
 import me.aimcventboat.main.commands.*;
 
 public class Main extends JavaPlugin {
@@ -12,8 +10,12 @@ public class Main extends JavaPlugin {
         System.out.println("Plugin de course de bateaux lancé.");
 
         getCommand("test").setExecutor(new Test());
-        getCommand("test").setExecutor(new Test());
+        
+        getCommand("boat_start").setExecutor(new boat_start());
+        getCommand("boat_start").setTabCompleter(new boat_start());
 
+        getCommand("set_start").setExecutor(new set_start());
+        getCommand("set_start").setTabCompleter(new set_start());
     }
 
     @Override

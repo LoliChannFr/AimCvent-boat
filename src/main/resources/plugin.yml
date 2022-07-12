@@ -8,3 +8,9 @@ commands:
   test:
     description: test
     permission: test.use
+  boat_start:
+    description: test
+    permission: boat.launcher.start
+  set_start:
+    description: test
+    permission: boat.launcher.set_start
