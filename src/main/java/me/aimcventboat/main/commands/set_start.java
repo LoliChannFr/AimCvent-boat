@@ -35,7 +35,7 @@ public class set_start implements CommandExecutor, TabCompleter {
 
             Player player = (Player) sender;
 
-            Inventory gui = Bukkit.createInventory(player, 9, "§8Choisissez la course");
+            Inventory gui = Bukkit.createInventory(player, 54, "§8Choisissez la course");
 
 
 

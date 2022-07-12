@@ -3,10 +3,15 @@ package me.aimcventboat.main.listener;
 import com.github.cliftonlabs.json_simple.JsonException;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -37,20 +42,78 @@ public class clickevent implements Listener {
                 JsonObject parser = (JsonObject) Jsoner.deserialize(reader);
 
                 List<String> runs = (List<String>) parser.get("runslist");
-                
+
                 String nb = String.valueOf(Objects.requireNonNull(e.getCurrentItem()).getItemMeta().getCustomModelData());
 
                 if (!runs.contains(nb)) {
-                    
+
                     player.closeInventory();
                     player.sendMessage("La course que vous avez sélectionnée n'existe pas.");
-                    
+
                     return;
                 }
+
+                Inventory gui = Bukkit.createInventory(player, 9, "§8Choisissez l'emplacement");
+
+
+                List<ItemStack> menu = new ArrayList<>();
+
+                ItemStack glass = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
+                ItemMeta metaglass = glass.getItemMeta();
+                metaglass.setDisplayName("§f ");
+                metaglass.setCustomModelData((Integer.valueOf(nb)));
+                glass.setItemMeta(metaglass);
+
+                menu.add(glass);
+                menu.add(glass);
+
+                for (int i = 1; i < 6; i++) {
+                    ItemStack wrench = new ItemStack(Material.BLUE_WOOL);
+                    ItemMeta metawrench = wrench.getItemMeta();
+                    metawrench.setCustomModelData(i);
+                    metawrench.setDisplayName("§fPosition #" + i);
+                    wrench.setItemMeta(metawrench);
+
+                    menu.add(wrench);
+
+                }
+
+                menu.add(glass);
+                menu.add(glass);
+
+                ItemStack[] menu_items = menu.toArray(new ItemStack[0]);
+
+                gui.setContents(menu_items);
+                player.openInventory(gui);
+            } catch (JsonException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+
+        if (e.getView().getTitle().equalsIgnoreCase("§8Choisissez l'emplacement")) {
+
+            e.setCancelled(true);
+
+            try {
+                // create a reader
+                Reader reader = Files.newBufferedReader(Paths.get("./plugins/AimCvent-boat/runs.json"));
+
+
+                // create parser
+                JsonObject parser = (JsonObject) Jsoner.deserialize(reader);
+
+                String nb = String.valueOf(Objects.requireNonNull(e.getInventory().getContents()[0]).getItemMeta().getCustomModelData());
+
+                String boat = String.valueOf(e.getCurrentItem().getItemMeta().getCustomModelData());
 
                 try {
 
                     JsonObject selected_run = (JsonObject) parser.get(nb);
+
+                    JsonObject selected_place = (JsonObject) selected_run.get("start_place");
 
                     List<Double> coord = new ArrayList<>();
                     coord.add(player.getLocation().getX());
@@ -59,7 +122,7 @@ public class clickevent implements Listener {
 
                     Float direction = player.getLocation().getYaw();
 
-                    selected_run.put("start_place",coord);
+                    selected_place.put(boat,coord);
                     selected_run.put("start_direction",direction);
 
                     parser.put(nb, selected_run);
@@ -78,8 +141,8 @@ public class clickevent implements Listener {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-                
-                
+
+
 
             } catch (JsonException ex) {
                 ex.printStackTrace();
@@ -87,5 +150,6 @@ public class clickevent implements Listener {
                 ex.printStackTrace();
             }
         }
+
+        }
     }
-}
