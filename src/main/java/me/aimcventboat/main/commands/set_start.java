@@ -27,17 +27,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class set_start implements CommandExecutor, TabCompleter {
+public class set_start implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
 
-        if (sender instanceof Player){
+        if (sender instanceof Player) {
 
             Player player = (Player) sender;
 
             Inventory gui = Bukkit.createInventory(player, 54, "§8Choisissez la course");
-
-
 
 
             try {
@@ -54,8 +52,7 @@ public class set_start implements CommandExecutor, TabCompleter {
                 List<ItemStack> menu = new ArrayList<>();
 
 
-
-                for(int i = 1; i < runs.size() + 1; i++) {
+                for (int i = 1; i < runs.size() + 1; i++) {
                     ItemStack wrench = new ItemStack(Material.BLUE_WOOL);
                     ItemMeta metawrench = wrench.getItemMeta();
                     metawrench.setCustomModelData(i);
@@ -63,7 +60,7 @@ public class set_start implements CommandExecutor, TabCompleter {
                     wrench.setItemMeta(metawrench);
 
                     menu.add(wrench);
-                    
+
                 }
 
                 ItemStack[] menu_items = menu.toArray(new ItemStack[0]);
@@ -77,56 +74,8 @@ public class set_start implements CommandExecutor, TabCompleter {
 
         }
 
-
         return false;
     }
-
-    @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        if (command.getName().equalsIgnoreCase("set_start")) {
-            if (args.length == 1) {
-                List<String> arguments = new ArrayList<>();
-
-                try {
-                    // create a reader
-                    Reader reader = Files.newBufferedReader(Paths.get("./plugins/AimCvent-boat/runs.json"));
-
-                    // create parser
-                    JsonObject parser = (JsonObject) Jsoner.deserialize(reader);
-
-                    List<String> runs = (List<String>) parser.get("runslist");
-
-                    reader.close();
-                    return runs;
-                } catch (IOException | JsonException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (args.length == 2) {
-                List<String> arguments = new ArrayList<>();
-
-                arguments.add("~");
-
-                return arguments;
-            }
-
-            if (args.length == 3) {
-                List<String> arguments = new ArrayList<>();
-
-                arguments.add("~");
-
-                return arguments;
-            }
-
-            if (args.length == 4) {
-                List<String> arguments = new ArrayList<>();
-
-                arguments.add("~");
-
-                return arguments;
-            }
-        }
-        return null;
-    }
 }
+
+

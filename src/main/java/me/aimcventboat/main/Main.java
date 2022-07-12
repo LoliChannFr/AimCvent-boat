@@ -16,7 +16,6 @@ public class Main extends JavaPlugin {
         getCommand("boat_start").setTabCompleter(new boat_start());
 
         getCommand("set_start").setExecutor(new set_start());
-        getCommand("set_start").setTabCompleter(new set_start());
 
         getServer().getPluginManager().registerEvents(new clickevent(), this);
     }
