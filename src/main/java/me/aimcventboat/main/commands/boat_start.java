@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -64,7 +65,12 @@ public class boat_start implements CommandExecutor, TabExecutor {
                 JsonObject run = (JsonObject) parser.get(args[0]);
                 JsonObject start_place = (JsonObject) run.get("start_place");
 
-                Integer place = getRandomplace();
+                Integer place = ((List<String>)run.get("players")).size() + 1;
+
+                if (place > 5){
+                    player.sendMessage("La course est pleine.");
+                    return false;
+                }
 
                 player.sendMessage(String.valueOf(place));
 
@@ -84,6 +90,19 @@ public class boat_start implements CommandExecutor, TabExecutor {
                 Entity boat = world.spawnEntity(loc, EntityType.BOAT);
 
                 boat.addPassenger(player);
+
+                BufferedWriter writer = null;
+
+                ((List<String>)run.get("players")).add(player.getName());
+
+                try {
+                    writer = Files.newBufferedWriter(Paths.get("./plugins/AimCvent-boat/runs.json"));
+                    Jsoner.serialize(parser, writer);
+                    writer.close();
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
 
             }
