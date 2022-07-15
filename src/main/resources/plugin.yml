@@ -11,6 +11,12 @@ commands:
   boat_start:
     description: test
     permission: boat.launcher.start
+  boat_end:
+    description: test
+    permission: boat.launcher.start
   set_start:
     description: test
     permission: boat.launcher.set_start
+  pnj_summon:
+    description: test
+    permission: test
