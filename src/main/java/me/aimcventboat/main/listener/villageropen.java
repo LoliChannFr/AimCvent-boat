@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -103,8 +104,15 @@ public class villageropen implements Listener {
 
                     JsonObject playerinfo = new JsonObject();
 
+                    long currenttime = Instant.now().getEpochSecond();
+
+                    player.sendMessage(String.valueOf(currenttime - System.currentTimeMillis()/1000));
+
                     playerinfo.put("race",nb);
-                    playerinfo.put("time",System.currentTimeMillis());
+                    playerinfo.put("time",currenttime);
+                    playerinfo.put("name",player.getName());
+
+                    player.sendMessage(String.valueOf(System.currentTimeMillis()));
 
 
                     ((JsonObject)parser.get("playerlist")).put(player.getName(), playerinfo);

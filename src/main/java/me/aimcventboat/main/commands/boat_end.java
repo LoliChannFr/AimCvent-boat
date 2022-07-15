@@ -51,10 +51,16 @@ public class boat_end implements CommandExecutor {
 
             JsonObject playerinfo = (JsonObject) playerlist.get(target.getName());
 
-            double time = (double) (System.currentTimeMillis() - Float.valueOf(String.valueOf(playerinfo.get("time"))));
+            double currenttime = System.currentTimeMillis() / 1000;
+
+            double time = (double) ((currenttime - Float.valueOf(String.valueOf(playerinfo.get("time"))) / 1000));
 
             int i = Math.toIntExact(Math.round(time));
 
+            target.sendMessage(String.valueOf(playerinfo.get("time")));
+            target.sendMessage(String.valueOf(currenttime));
+            System.out.println(currenttime);
+            target.sendMessage(String.valueOf(time));
             target.sendMessage(String.valueOf(i));
 
 
