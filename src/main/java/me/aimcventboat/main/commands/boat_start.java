@@ -39,33 +39,53 @@ public class boat_start implements CommandExecutor, TabExecutor {
             // create a reader
             Reader reader = null;
             try {
-                reader = Files.newBufferedReader(Paths.get("./plugins/AimCvent-boat/runs.json"));
-            } catch (IOException e) {
-                e.printStackTrace();
+                reader = Files.newBufferedReader(Paths.get("./plugins/AimCvent-boat/runs/data.json"));
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
 
             // create parser
             JsonObject parser = null;
             try {
                 parser = (JsonObject) Jsoner.deserialize(reader);
-            } catch (JsonException e) {
-                e.printStackTrace();
+            } catch (JsonException ex) {
+                ex.printStackTrace();
             }
 
             List<String> runs = (List<String>) parser.get("runslist");
 
             try {
                 reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
 
-            if (runs.contains(args[0])) {
+            String nb = args[0];
 
-                JsonObject run = (JsonObject) parser.get(args[0]);
+            if (runs.contains(nb)) {
+
+                try {
+                    reader = Files.newBufferedReader(Paths.get("./plugins/AimCvent-boat/runs/" + nb + ".json"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                // create parser
+                JsonObject run = null;
+                try {
+                    run = (JsonObject) Jsoner.deserialize(reader);
+                } catch (JsonException ex) {
+                    ex.printStackTrace();
+                }
+
                 JsonObject start_place = (JsonObject) run.get("start_place");
 
                 Integer place = ((List<String>)run.get("players")).size() + 1;
+
+                if ((Boolean) run.get("compet")) {
+                    player.sendMessage("§cLa course est en mode compétition.");
+                    return false;
+                }
 
                 if (place > 5){
                     player.sendMessage("La course est pleine.");

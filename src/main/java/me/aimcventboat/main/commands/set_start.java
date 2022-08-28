@@ -27,6 +27,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static me.aimcventboat.main.fonction.RunMenu;
+
 public class set_start implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
@@ -35,42 +37,7 @@ public class set_start implements CommandExecutor {
 
             Player player = (Player) sender;
 
-            Inventory gui = Bukkit.createInventory(player, 54, "§8Choisissez la course");
-
-
-            try {
-                // create a reader
-                Reader reader = Files.newBufferedReader(Paths.get("./plugins/AimCvent-boat/runs.json"));
-
-
-                // create parser
-                JsonObject parser = (JsonObject) Jsoner.deserialize(reader);
-
-
-                List<String> runs = (List<String>) parser.get("runslist");
-
-                List<ItemStack> menu = new ArrayList<>();
-
-
-                for (int i = 1; i < runs.size() + 1; i++) {
-                    ItemStack wrench = new ItemStack(Material.BLUE_WOOL);
-                    ItemMeta metawrench = wrench.getItemMeta();
-                    metawrench.setCustomModelData(i);
-                    metawrench.setDisplayName("§fCourse #" + i);
-                    wrench.setItemMeta(metawrench);
-
-                    menu.add(wrench);
-
-                }
-
-                ItemStack[] menu_items = menu.toArray(new ItemStack[0]);
-
-                gui.setContents(menu_items);
-                player.openInventory(gui);
-            } catch (IOException | JsonException e) {
-                e.printStackTrace();
-            }
-
+            player.openInventory(RunMenu("§8Choisissez la course", player));
 
         }
 

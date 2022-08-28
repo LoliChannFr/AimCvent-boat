@@ -20,3 +20,24 @@ commands:
   pnj_summon:
     description: test
     permission: test
+  checkpoint_pass:
+    description: test
+    permission : test
+  run_add:
+    description: test
+    permission: test
+  competition:
+    description: test
+    permission: test
+  compet_join:
+    description: test
+  compet_start:
+    description: test
+  compet_end:
+    description: test
+  hologram:
+    description: test
+  hologram_rm:
+    description: test
+  run_rm:
+    description: test

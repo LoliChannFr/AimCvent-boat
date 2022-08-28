@@ -10,10 +10,7 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -28,16 +25,14 @@ import java.util.List;
 
 import static me.aimcventboat.main.fonction.RunMenu;
 
-
-public class pnjsum implements CommandExecutor {
+public class hologram implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         Player player = (Player) sender;
 
-        player.openInventory(RunMenu("§8Choisissez la course à lancer", player));
+        player.openInventory(RunMenu("§8Choisissez l'hologram", player));
+        return false;
 
-    return false;
     }
-
 }

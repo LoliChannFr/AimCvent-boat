@@ -5,16 +5,18 @@ Mode Normal :
 - Pas plus de 5 personnes par map ✅
 - Pas sur la glace sans bateau ✅
 - Scoreboard avec :
-      - le meilleur temps de la personne qui fait le parcours (genre moi dans mon scoreboard mon meilleur temps sur la course)
-      - le lien discord du serveur
-- Hologram dans le lobby d'attente avec les 10 meilleurs temps pour chaque course
+      - le meilleur temps de la personne qui fait le parcours (genre moi dans mon scoreboard mon meilleur temps sur la course) ✅
+      - le lien discord du serveur ✅
+- Hologram dans le lobby d'attente avec les 10 meilleurs temps pour chaque course ✅
 - Items pour revenir au dernier check-point
 
 
 Mode compétition :
 
-- Uniquement les op ouvrent à certains participants
-- Grille de départ avec timer de démarrage
+- Uniquement les op ouvrent à certains participants ✅
+- Grille de départ avec timer de démarrage ✅
 - Scoreboard qui s'actualise avec les classements
-- Hologram dans le lobby d'attente avec les 10 meilleurs temps pour chaque course
+- Hologram dans le lobby d'attente avec les 10 meilleurs temps pour chaque course ✅
 - Items pour revenir au dernier check-point
+
+- Easter egg du PAIN
