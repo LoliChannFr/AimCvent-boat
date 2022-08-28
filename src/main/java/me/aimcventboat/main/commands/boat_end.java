@@ -57,8 +57,12 @@ public class boat_end implements CommandExecutor {
                         .filter(e -> e.getType() == EntityType.BOAT)
                         .findFirst()
                         .orElse(null);
-                if (boat.getPassengers().get(0) instanceof Player) {
-                    player = (Player) boat.getPassengers().get(0);
+                try {
+                    if (boat.getPassengers().get(0) instanceof Player) {
+                        player = (Player) boat.getPassengers().get(0);
+                    }
+                } catch (Exception e) {
+                    return false;
                 }
                 player = (Player) Bukkit.getPlayer(boat.getPassengers().get(0).getName());
             }

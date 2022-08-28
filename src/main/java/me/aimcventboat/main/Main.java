@@ -67,6 +67,8 @@ public class Main extends JavaPlugin {
 
         getCommand("hologram_rm").setExecutor(new hologram_rm());
 
+        getCommand("hologram_menu").setExecutor(new hologram_menu());
+
         getCommand("run_rm").setExecutor(new run_rm());
 
         getServer().getPluginManager().registerEvents(new test(), this);
@@ -237,7 +239,7 @@ public class Main extends JavaPlugin {
 
             }
 
-        }.runTaskTimer(this, 0, 5*20);
+        }.runTaskTimer(this, 5*20, 5*20);
 
         System.out.println("///////////////////////////////////////////////////");
         System.out.println("");

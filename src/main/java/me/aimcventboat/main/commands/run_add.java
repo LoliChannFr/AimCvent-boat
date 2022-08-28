@@ -38,12 +38,12 @@ public class run_add implements CommandExecutor {
             name = "";
 
             for (String string : args) {
+
                 name = name + " " + string;
             }
 
         }
-
-        newfile.addDefault("name", name);
+        newfile.set("name", name);
 
         String nb = String.valueOf(runslist.size() + 1);
 

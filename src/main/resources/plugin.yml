@@ -41,3 +41,5 @@ commands:
     description: test
   run_rm:
     description: test
+  hologram_menu:
+    description: test

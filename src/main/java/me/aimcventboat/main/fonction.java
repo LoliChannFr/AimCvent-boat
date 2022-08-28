@@ -55,7 +55,7 @@ public class fonction {
                 metawrench.setCustomModelData(Integer.valueOf(i));
                 try{
                     String runname = (String) run.get("name");
-                    metawrench.setDisplayName("§fCourse " + runname);
+                    metawrench.setDisplayName("§fCourse" + runname);
                     if (runname == null) {
                         metawrench.setDisplayName("§fCourse #" + i);
                     }

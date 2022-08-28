@@ -272,7 +272,7 @@ public class clickevent implements Listener {
                 System.out.println(str);
                 FileConfiguration hologram_json = fonction.MemoryToConfig((MemorySection) hologram_data.get(str));
 
-                if (!hologram_json.get("race").equals(nb)) return;
+                if (!hologram_json.get("race").equals(nb)) continue;
 
                 ItemStack wrench = new ItemStack(Material.ARMOR_STAND);
                 ItemMeta metawrench = wrench.getItemMeta();
@@ -282,6 +282,7 @@ public class clickevent implements Listener {
                 menu.add(wrench);
 
             }
+
             System.out.println("test3");
             ItemStack[] menu_items = menu.toArray(new ItemStack[0]);
 
@@ -661,6 +662,30 @@ public class clickevent implements Listener {
 
             File f = new File (folder, "./runs/" + item.getItemMeta().getCustomModelData() + ".yml");
 
+
+            FileConfiguration hologram_list = fonction.ConfigGet("hologram");
+
+            for (String str : hologram_list.getKeys(false)) {
+                FileConfiguration hologram_data = fonction.MemoryToConfig((MemorySection)  hologram_list.get(str));
+
+                if (hologram_data.get("race").equals(String.valueOf(item.getItemMeta().getCustomModelData()))) {
+                    ArmorStand hologram = (ArmorStand) Bukkit.getEntity(UUID.fromString(str));
+                    hologram.remove();
+
+                    for (String string : (ArrayList<String>) hologram_data.get("lines")) {
+                        ArmorStand line = (ArmorStand) Bukkit.getEntity(UUID.fromString(string));
+                        line.remove();
+                    }
+
+                    hologram_list.set(String.valueOf(item.getItemMeta().getCustomModelData()), null);
+                    player.closeInventory();
+
+                    fonction.ConfigSave(hologram_data,"hologram");
+
+                    hologram_list.set(str, null);
+                }
+            }
+
             Files.delete(Paths.get(f.getPath()));
 
             // create a reader
@@ -675,6 +700,9 @@ public class clickevent implements Listener {
             data.set("runslist", runslist);
 
             fonction.ConfigSave(data,"./runs/data");
+
+
+            fonction.ConfigSave(hologram_list, "hologram");
 
 
             f.delete();
